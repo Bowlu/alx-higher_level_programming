@@ -3,17 +3,20 @@
     sending request to the URL and displaying the body
     of the response.
 """
-import requests as req
+import requests
 from sys import argv
 
 
-if __name__ == '__main__':
+def request_status():
+    """request status code"""
+    req = requests.get(argv[1])
+    code = req.status_code
 
-    url = argv[1]
-
-    result = req.get(url)
-
-    if result.status_code >= 400:
-        print('Error code: {}'.format(result.status_code)
+    if(code == 200):
+        print(req.text)
     else:
-        print(result.text)
+        print('Error code: {}'.format(req.status_code))
+
+
+if __name__ == '__main__':
+    request_status()
