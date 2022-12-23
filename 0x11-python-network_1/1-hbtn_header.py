@@ -3,12 +3,15 @@
     # Script that fetches https://alx-intranet.hbtn.io/status
     #status
 """
-import urllib.request as req
+from urllib.request import urlopen
 from sys import argv
 
+
+def requestId():
+    """opening url and performing task"""
+    with urlopen(argv[1]) as response:
+        print(response.headers.get('X-Request-Id'))
+
+
 if __name__ == '__main__':
-    url = argv[1]
-    with req.urlopen(url) as res:
-        html = res.read()
-        data = dict(res.headers)
-        print(data['X-Request-Id'])
+    requestId()
