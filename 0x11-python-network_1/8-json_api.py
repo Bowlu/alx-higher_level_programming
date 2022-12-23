@@ -3,22 +3,31 @@
     script that takes in a letter and sends a POST request to
     http://0.0.0.0:5000/search_user with the letter as a parameter
 """
-import requests as req
+import requests
 from sys import argv
 
 
-if __name__ == '__main__':
-
-    letter = '' if len(argv) == 1 else argv[1]
-    payload = {'q': letter}
+def post_q():
+    """post a variable"""
+    try:
+        q = argv[1]
+    except IndexError:
+        q = ''
 
     url = 'http://0.0.0.0:5000/search_user'
-    r = req.post(url, data=payload)
+    data = {'q': q}
+    req = requests.post(url, data)
     try:
-        res = r.json()
-        if res == {}:
-            print("No result")
+        j_format = req.json()
+        if (len(j_format) == 0):
+            print('No result')
         else:
-            print("[{}] {}".format(response.get("id"), response.get("name")))
+            id_no = j_format.get('id')
+            name = j_format.get('name')
+            print('[{}] {}'.format(id_no, name))
     except ValueError:
-        print("Not a valid JSON")
+        print('Not a valid JSON')
+
+
+if __name__ == '__main__':
+    post_q()
