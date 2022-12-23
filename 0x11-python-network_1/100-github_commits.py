@@ -3,20 +3,24 @@
     script that takes user GitHub credentials (username and password)
     and uses the GitHub API to display user id
 """
-import requests as req
+import requests
 from sys import argv
-from requests.auth import HTTPBasicAuth
 
-if __name__ == '__main__':
-    url = "https://api.github.com/repos/{}/{}/commits".format(
-            sys.argv[2], sys.argv[1])
 
-    r = requests.get(url)
-    commits = r.json()
+def get_commits():
+    """display commits and author"""
+    url = 'https://api.github.com/repos/{}/{}/commits'.format(argv[2], argv[1])
+    req = requests.get(url)
+    json = req.json()
+
     try:
-        for i in range(10):
-            print("{}: {}".format(
-                commits[i].get("sha"),
-                commits[i].get("commit").get("author").get("name")))
+        for i in range(0, 10):
+            sha = json[i].get('sha')
+            author = json[i].get('commit').get('author').get('name')
+            print('{}: {}'.format(sha, author))
     except IndexError:
         pass
+
+
+if __name__ == '__main__':
+    get_commits()
