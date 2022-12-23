@@ -5,11 +5,15 @@
     found in the header of the response.
 """
 
-import requests as req
+import requests
 from sys import argv
 
+
+def extract_header():
+    """extract header key X-Request_id"""
+    req = requests.get(argv[1])
+    print(req.headers.get('X-Request-Id'))
+
+
 if __name__ == '__main__':
-    url = argv[1]
-    
-    result = req.get(url)
-    print(result.headers.get('X-Request-Id'))
+    extract_header()
