@@ -5,7 +5,6 @@
     found in the header of the response.
 """
 
-
 import requests as req
 from sys import argv
 
